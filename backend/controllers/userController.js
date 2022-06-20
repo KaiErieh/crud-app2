@@ -55,7 +55,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   })
 
-  res.status(201).json({ username: username, token: generateToken(registerUser.id) })
+  res.status(201).json({ _id: registeredUser.id, username: registeredUser.username, token: generateToken(registeredUser._id) })
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
