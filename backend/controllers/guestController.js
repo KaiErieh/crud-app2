@@ -1,22 +1,23 @@
 const uuid = require('uuid')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
-
+const jwt = require("jsonwebtoken")
 const Guest = require('../models/guestModel')
+const userModel = require('../models/userModel')
 
 
-const createGuest = asyncHandler(async(req, res) => {
+const createGuest = asyncHandler(async (req, res) => {
   const { email } = req.body
-  if(!email){
+  if (!email) {
     res.status(400)
     throw new Error('Fill all required fields')
   }
-  
-  const guestExists = await Guest.findOne({email})
 
-  
+  const guestExists = await Guest.findOne({ email })
 
-  if(guestExists){
+
+
+  if (guestExists) {
     res.status(400)
     throw new Error('Guest already exists!')
   }
@@ -26,25 +27,47 @@ const createGuest = asyncHandler(async(req, res) => {
     code: uuid.v1(),
   })
 
-  res.status(201).json(`Created guest ${guest.email}`)
+  res.status(201).json(`Created guest ${guest.email} with code ${guest.code}`)
 })
 
-const loginGuest = asyncHandler(async(req, res) => {
+const loginGuest = asyncHandler(async (req, res) => {
   const { code } = req.body
-  const guest = await Guest.findOne({code})
 
-  if(guest){
+
+  if (!code) {
+    res.status(400)
+    throw new Error(`Please, enter your code`)
+  }
+
+  const guest = await Guest.findOne({ code })
+
+  if (guest) {
     res.json({
-      email: guest.email
+      email: guest.email,
+      token: generateToken(guest.id)
     })
+  } else {
+    res.status(400)
+    throw new Error(`Code invalid`)
   }
 
 
 })
 
+const getGuests = asyncHandler(async (req, res) => {
+  const guests = await Guest.find()
+
+  if (guests) {
+    res.status(200).json(guests)
+  } else {
+    res.status(404)
+    throw new Error("No users found")
+  }
+})
+
 const generateToken = (id) => {
-  return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '1d'})
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 }
 
 
-module.exports = { createGuest, loginGuest }
+module.exports = { createGuest, loginGuest, getGuests }

@@ -10,8 +10,13 @@ const guestSchema = mongoose.Schema(
     code: {
       type: String
 
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
     }
-  }
+  },
+  { timestamps: true }
 )
 
-module.exports = mongoose.model('Guest',guestSchema)
+module.exports = mongoose.model('Guest', guestSchema)
