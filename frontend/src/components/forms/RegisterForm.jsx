@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import "bootstrap"
 import { Grid, Paper, Avatar, TextField, Button, InputLabel, Select, MenuItem, FormControl } from "@mui/material"
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { toast } from "react-toastify"
 import { register, reset } from "../../features/auth/authSlice"
@@ -17,8 +16,9 @@ function RegisterForm() {
     password: "",
     password2: "",
     role: "",
+    email: "",
   })
-  const { username, password, password2, role } = formData
+  const { username, password, password2, role, email } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -52,6 +52,7 @@ function RegisterForm() {
     } else {
       const userData = {
         username,
+        email,
         password,
         role,
       }
@@ -62,7 +63,7 @@ function RegisterForm() {
   const paperStyle = {
     minHeight: "25vw",
     padding: 20,
-    height: "47vh",
+    height: "55vh",
     width: 280,
     margin: "20px auto",
 
@@ -96,6 +97,16 @@ function RegisterForm() {
               onChange={onChange}
               label="Username"
               placeholder="Enter username..." fullWidth
+              required
+              style={inputStyle} />
+              <TextField
+              name="email"
+              value={email}
+              onChange={onChange}
+              label="E-Mail"
+              placeholder="Enter your e-mail" 
+              type="text"
+              fullWidth
               required
               style={inputStyle} />
             <TextField

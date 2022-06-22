@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
-import { reset, getGuests, deleteGuest } from "../../features/guest/guestSlice";
+import { reset, getUsers, deleteUser } from "../../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../Spinner";
 import { toast } from "react-toastify";
@@ -20,7 +20,7 @@ import { Button, Grid, IconButton, Modal } from "@mui/material";
 import "./Forms.css";
 import SendIcon from "@mui/icons-material/Send";
 
-export default function GuestList() {
+export default function UserList() {
   const paperStyle = {
     minHeight: "10vw",
     padding: 20,
@@ -29,8 +29,8 @@ export default function GuestList() {
     margin: "20px auto",
   };
 
-  const { guestList, isLoading, isError, message, isDeleted } = useSelector(
-    (state) => state.guest
+  const { user, userList, isLoading, isError, message, isDeleted } = useSelector(
+    (state) => state.auth
   );
   const [sendOpen, setSendOpen] = useState(false);
   const handleSend = () => {
@@ -42,18 +42,18 @@ export default function GuestList() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+ 
 
   useEffect(() => {
     if (isError) {
       console.log(message);
     }
     if (isDeleted) {
-      toast.success("Guest deleted");
+      toast.success("User deleted");
       setTimeout(() => window.location.reload(false), 1400);
     }
 
-    dispatch(getGuests());
+    dispatch(getUsers());
 
     return () => {
       dispatch(reset());
@@ -62,6 +62,11 @@ export default function GuestList() {
 
   if (isLoading) {
     return <Spinner />;
+  }
+
+  const handleDate = (date) => {
+    const d = new Date(date).toLocaleDateString("cs-CZ")
+    return d
   }
 
   if (!user) {
@@ -74,15 +79,15 @@ export default function GuestList() {
         <Table sx={{ minWidth: 700 }}>
           <TableHead sx={{ backgroundColor: "black", color: "white" }}>
             <TableRow>
-              <TableCell sx={{ color: "white" }}>Name</TableCell>
+              <TableCell sx={{ color: "white" }}>Username</TableCell>
               <TableCell sx={{ color: "white" }} align="center">
-                E-mail
+                Role
               </TableCell>
               <TableCell sx={{ color: "white" }} align="center">
-                Code
+                E-Mail
               </TableCell>
               <TableCell sx={{ color: "white" }} align="center">
-                Start Date
+                Joined
               </TableCell>
               <TableCell sx={{ color: "white" }} align="center">
                 Actions
@@ -90,19 +95,16 @@ export default function GuestList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {guestList.map((g, index) => (
+            {userList.map((u, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
-                  {g.name}
+                  {u.username}
                 </TableCell>
                 <TableCell align="center">
-                  {g.email} &nbsp;
-                  <IconButton color="primary" component="span">
-                    <ContentCopyIcon fontSize="small" />
-                  </IconButton>
+                  {u.role} &nbsp;
                 </TableCell>
                 <TableCell align="center">
-                  {g.code} &nbsp;
+                  {u.email} &nbsp;
                   <IconButton color="primary" component="span">
                     <ContentCopyIcon fontSize="small" />
                   </IconButton>
@@ -121,7 +123,7 @@ export default function GuestList() {
                     aria-describedby="modal-modal-description"
                   >
                     <Paper elevation={10} style={paperStyle}>
-                      <Grid align="center"> Send code to {g.name}?</Grid>
+                      <Grid align="center"> Send code to {u.name}?</Grid>
                       <Grid spacing={4}>
                         <Button
                           md={2}
@@ -144,13 +146,13 @@ export default function GuestList() {
                     </Paper>
                   </Modal>
                 </TableCell>
-                <TableCell align="center">{g.startDate}</TableCell>
+                <TableCell align="center">{handleDate(u.createdAt)}</TableCell>
                 <TableCell align="center">
                   <button>
                     <EditIcon fontSize="small" />
                   </button>
                   &nbsp;
-                  <button onClick={() => dispatch(deleteGuest(g._id))}>
+                  <button onClick={() => dispatch(deleteUser(u._id))}>
                     <DeleteForeverIcon fontSize="small" />
                   </button>
                 </TableCell>

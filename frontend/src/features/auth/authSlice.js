@@ -11,6 +11,8 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   message: "",
+  isDeleted: false,
+  userList: [],
 }
 
 // Register user
@@ -48,6 +50,41 @@ export const login = createAsyncThunk(
   }
 )
 
+export const getUsers = createAsyncThunk(
+  'users/getAll',
+  async (_, thunkAPI) => {
+      try {
+
+          return await authService.getUsers()
+      } catch (error) {
+          const message =
+              (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+              error.message ||
+              error.toString()
+          return thunkAPI.rejectWithValue(message)
+      }
+  }
+)
+
+export const deleteUser = createAsyncThunk(
+  'users/deleteOne',
+  async (id, thunkAPI) => {
+      try {
+
+          return await authService.deleteUser(id)
+      } catch (error) {
+          const message =
+              (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+              error.message ||
+              error.toString()
+          return thunkAPI.rejectWithValue(message)
+      }
+  }
+)
 
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout()
@@ -62,6 +99,8 @@ export const authSlice = createSlice({
       state.isSuccess = false
       state.isError = false
       state.message = ''
+      state.isDelete = false
+  
     },
   },
   extraReducers: (builder) => {
@@ -97,6 +136,35 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null
       })
+      .addCase(getUsers.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getUsers.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.userList = action.payload
+      })
+      .addCase(getUsers.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+        
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isDeleted = true
+        
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+        
+      })
+      
   },
 })
 

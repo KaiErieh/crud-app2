@@ -76,18 +76,6 @@ function NavBar() {
     }
   };
 
-  const administrationHandler = () => {
-    if (user && user.role === "admin") {
-      return (
-        <Link to="/admin">
-              <Button color="inherit">Administration</Button>
-        </Link>
-      );
-    } else {
-      return null;
-    }
-  };
-
   const handleRole = (userRole) => {
     switch(userRole){
       case "recruiter":
@@ -119,7 +107,6 @@ function NavBar() {
           </Typography>
           <Stack direction="row" spacing={2}>   
             {roleHandler()}
-            {administrationHandler()}
             {logOutHandler()}
           </Stack>
         </Toolbar>

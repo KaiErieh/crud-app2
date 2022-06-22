@@ -24,7 +24,7 @@ function AdminDashboard() {
     <Grid container spacing={2}>
 
       <Grid item md={1.2}>
-        <Link to="/admin">
+        <Link to="/guests">
           <Tile
             title="Guests"
             content="Guests Administration"
@@ -35,7 +35,7 @@ function AdminDashboard() {
     
     
       <Grid item md={2}>
-        <Link to="/users/admin">
+        <Link to="/users">
           <Tile
             title="Users"
             content="Users Administration"

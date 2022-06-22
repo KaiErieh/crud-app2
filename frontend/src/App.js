@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { AuthGU, AuthU } from "./middleware/Auth"
+import UserAdmin from "./pages/UserAdmin"
 
 
 function App() {
@@ -20,8 +21,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/dashboard" element={<AuthGU el={<Dashboard />} />} />
-            <Route path="/admin" element={<AuthU el={<Administration />} />} />
+            <Route path="/guests" element={<AuthU el={<Administration />} />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/users" element={<AuthU el={<UserAdmin />} />} />
           </Routes>
         </div>
       </Router>
