@@ -7,7 +7,7 @@ const userModel = require('../models/userModel')
 
 
 const createGuest = asyncHandler(async (req, res) => {
-  const { email } = req.body
+  const { name, email, startDate } = req.body
   if (!email) {
     res.status(400)
     throw new Error('Fill all required fields')
@@ -23,7 +23,9 @@ const createGuest = asyncHandler(async (req, res) => {
   }
 
   const guest = await Guest.create({
+    name,
     email,
+    startDate,
     code: uuid.v1(),
   })
 
@@ -31,8 +33,12 @@ const createGuest = asyncHandler(async (req, res) => {
 })
 
 const loginGuest = asyncHandler(async (req, res) => {
+
   const { code } = req.body
 
+
+
+  console.log("guestController.js: " + req.body)
 
   if (!code) {
     res.status(400)
@@ -65,9 +71,22 @@ const getGuests = asyncHandler(async (req, res) => {
   }
 })
 
+const deleteGuest = asyncHandler(async (req, res) => {
+  const guest = await Guest.findById(req.params.id)
+  if (guest) {
+    res.status(200)
+    res.json(guest)
+  } else {
+    res.status(404)
+    throw new Error("Guest not found")
+  }
+  await Guest.remove(guest)
+
+})
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 }
 
 
-module.exports = { createGuest, loginGuest, getGuests }
+module.exports = { createGuest, loginGuest, getGuests, deleteGuest }

@@ -8,7 +8,7 @@ const { loginUser,
 
 const router = express.Router()
 
-router.get('/login', loginUser)
+router.post('/login', loginUser)
 router.post('/', registerUser)
 router.put('/:id')
 router.delete('/:id', deleteUser)

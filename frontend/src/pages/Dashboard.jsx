@@ -1,9 +1,12 @@
-import React from 'react'
+import DashboardLayout from "../components/DashboardLayout";
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
-  )
+    <div>
+      Dashboard
+      <DashboardLayout />
+    </div>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

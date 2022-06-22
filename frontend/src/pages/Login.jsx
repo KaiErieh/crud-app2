@@ -1,7 +1,7 @@
-import { Grid } from '@mui/material'
-import React from 'react'
-import CodeLogin from '../components/forms/CodeLogin'
-import LoginForm from '../components/forms/LoginForm'
+import { Grid } from "@mui/material";
+import React from "react";
+import CodeLogin from "../components/forms/CodeLogin";
+import LoginForm from "../components/forms/LoginForm";
 
 function Login() {
   return (
@@ -13,13 +13,9 @@ function Login() {
         <Grid item md={2}>
           <CodeLogin />
         </Grid>
-          
-        
-
-      
       </Grid>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

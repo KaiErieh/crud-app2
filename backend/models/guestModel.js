@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 
 const guestSchema = mongoose.Schema(
   {
+    name: {
+      type: String,
+
+    },
     email: {
       type: String,
       required: [true, "Please, add an email!"],
@@ -14,6 +18,10 @@ const guestSchema = mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
+    },
+    startDate: {
+      type: String,
+
     }
   },
   { timestamps: true }

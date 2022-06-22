@@ -1,18 +1,4 @@
-.paperStyle {
-  padding: 20;
-  height: 70vh;
-  width: 280;
-  margin: 20px auto;
+.slim {
+  max-height: 1px;
 }
 
-.avatarStyle {
-  background-color: #FFCC00;
-}
-.iconStyle {
-  color: #D40511;
-}
-
-.inputStyle {
-  margin: 5px auto;
-  padding-bottom: 5px;
-}
