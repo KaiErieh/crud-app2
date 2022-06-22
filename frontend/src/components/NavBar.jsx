@@ -20,6 +20,9 @@ import {
 import "./Comps.css";
 
 function NavBar() {
+
+  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -55,6 +58,53 @@ function NavBar() {
     }
   };
 
+  const roleHandler = () => {
+    if (user) {
+      return(
+        <Link to="/dashboard">
+              <Button color="inherit"> Dashboard</Button>
+        </Link>)
+      
+    } else if (guest) {
+      return (
+        <Link to="/dashboard">
+              <Button color="inherit">Onboarding Dashboard</Button>
+        </Link>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const administrationHandler = () => {
+    if (user && user.role === "admin") {
+      return (
+        <Link to="/admin">
+              <Button color="inherit">Administration</Button>
+        </Link>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const handleRole = (userRole) => {
+    switch(userRole){
+      case "recruiter":
+        return {"backgroundColor": "#9c27b0"};
+      case "admin":
+        return {"backgroundColor": "#e91e63"};
+      case "hrbp":
+        return {"backgroundColor": "#618833"};
+      case "manager":
+        return {"backgroundColor": "#ff9800"};
+      case undefined:
+        return {"backgroundColor": "#2196f3"};
+      default:
+        return {"backgroundColor": "#2196f3"};
+    }
+  }
+
   return (
     <div style={{ textDecoration: "none" }}>
       <AppBar position="static">
@@ -67,14 +117,9 @@ function NavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Onboarding Self-Service
           </Typography>
-          <Stack direction="row" spacing={2}>
-            <Link to="/dashboard">
-              <Button color="inherit">Dashboard</Button>
-            </Link>
-            <Link to="/admin">
-              <Button color="inherit">Administration</Button>
-            </Link>
-
+          <Stack direction="row" spacing={2}>   
+            {roleHandler()}
+            {administrationHandler()}
             {logOutHandler()}
           </Stack>
         </Toolbar>

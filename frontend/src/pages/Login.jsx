@@ -7,7 +7,7 @@ function Login() {
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item md={6}>
+        <Grid item md={7}>
           <LoginForm />
         </Grid>
         <Grid item md={2}>

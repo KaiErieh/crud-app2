@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import "bootstrap"
-import { Grid, Paper, Avatar, TextField, Button } from "@mui/material"
+import { Grid, Paper, Avatar, TextField, Button, InputLabel, Select, MenuItem, FormControl } from "@mui/material"
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { toast } from "react-toastify"
@@ -16,8 +16,9 @@ function RegisterForm() {
     username: "",
     password: "",
     password2: "",
+    role: "",
   })
-  const { username, password, password2 } = formData
+  const { username, password, password2, role } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -42,6 +43,7 @@ function RegisterForm() {
       [e.target.name]: e.target.value
     }))
   }
+  
   const onSubmit = (e) => {
     e.preventDefault()
     
@@ -51,29 +53,28 @@ function RegisterForm() {
       const userData = {
         username,
         password,
+        role,
       }
       dispatch(register(userData))
     }
   }
 
   const paperStyle = {
-    minHeight: "40vw",
+    minHeight: "25vw",
     padding: 20,
-    height: "50vh",
+    height: "47vh",
     width: 280,
     margin: "20px auto",
 
   }
 
-
-
-  const iconStyle = {
-    color: "#D40511",
-  }
-
   const inputStyle = {
     margin: "5px auto",
     paddingBottom: "5px",
+  }
+  const selectStyle = {
+    margin: "10px auto",
+    paddingBottom: "2px",
   }
 
   if(isLoading){
@@ -115,6 +116,17 @@ function RegisterForm() {
               fullWidth
               required
               style={inputStyle} />
+              <FormControl fullWidth>
+              <InputLabel id="role">
+                Role
+              </InputLabel>
+              <Select name="role" style={selectStyle} fullWidth onChange={onChange} labelId="role" id="select" value={role} label="Role" >
+                  <MenuItem value="admin">Admin</MenuItem>
+                  <MenuItem value="recruiter">Recruiter</MenuItem>
+                  <MenuItem value="manager">Manager</MenuItem>
+                  <MenuItem value="hrbp">HR Business Partner</MenuItem>
+              </Select>
+              </FormControl>
             <Button
               variant="contained"
               type="submit"

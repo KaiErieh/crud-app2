@@ -7,9 +7,9 @@ import { toast } from "react-toastify";
 import Spinner from "../Spinner";
 
 const paperStyle = {
-  minHeight: "40vw",
+  minHeight: "20vw",
   padding: 20,
-  height: "50vh",
+  height: "22vh",
   width: 280,
   margin: "20px auto",
 };

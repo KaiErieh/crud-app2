@@ -53,9 +53,9 @@ function LoginForm() {
   };
 
   const paperStyle = {
-    minHeight: "40vw",
+    minHeight: "20vw",
     padding: 20,
-    height: "50vh",
+    height: "30vh",
     width: 280,
     margin: "20px auto",
   };

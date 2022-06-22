@@ -22,6 +22,7 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(200).json(res.json({
       _id: user.id,
       username: user.username,
+      role: user.role,
       token: generateToken(user._id),
     }))
   } else {
@@ -34,7 +35,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const registerUser = asyncHandler(async (req, res) => {
 
-  const { username, password } = req.body
+  const { username, password, role } = req.body
   if (!username || !password) {
     res.status(400).json({ message: "Please fill all fields" })
   }
@@ -52,6 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const registeredUser = await User.create({
     username,
     password: hashedPassword,
+    role,
 
   })
 
