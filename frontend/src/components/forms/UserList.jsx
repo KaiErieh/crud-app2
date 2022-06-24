@@ -73,6 +73,15 @@ export default function UserList() {
     navigate("/");
   }
 
+  const handleCopy = () => {
+    toast.info("Copied to clipboard", {
+        pauseOnHover: false,
+        autoClose: 350,
+        hideProgressBar: true,
+        position: "top-center",
+    })
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -105,17 +114,10 @@ export default function UserList() {
                 </TableCell>
                 <TableCell align="center">
                   {u.email} &nbsp;
-                  <IconButton color="primary" component="span">
+                  <IconButton onClick={handleCopy} color="primary" component="span">
                     <ContentCopyIcon fontSize="small" />
                   </IconButton>
-                  &nbsp;
-                  <IconButton
-                    onClick={handleSend}
-                    color="primary"
-                    component="span"
-                  >
-                    <SendIcon color="primary" fontSize="small" />
-                  </IconButton>
+
                   <Modal
                     open={sendOpen}
                     onClose={handleSendClose}

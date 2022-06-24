@@ -68,6 +68,11 @@ export default function GuestList() {
     navigate("/");
   }
 
+   const handleDate = (date) => {
+    const d = new Date(date).toLocaleDateString("cs-CZ")
+    return d
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -80,6 +85,9 @@ export default function GuestList() {
               </TableCell>
               <TableCell sx={{ color: "white" }} align="center">
                 Code
+              </TableCell>
+              <TableCell sx={{ color: "white" }} align="center">
+                Created at
               </TableCell>
               <TableCell sx={{ color: "white" }} align="center">
                 Start Date
@@ -144,6 +152,7 @@ export default function GuestList() {
                     </Paper>
                   </Modal>
                 </TableCell>
+                <TableCell align="center">{handleDate(g.createdAt)}</TableCell>
                 <TableCell align="center">{g.startDate}</TableCell>
                 <TableCell align="center">
                   <button>

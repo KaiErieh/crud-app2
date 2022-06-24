@@ -77,6 +77,8 @@ function NavBar() {
   };
 
   const handleRole = (userRole) => {
+    if(user) {
+    
     switch(userRole){
       case "recruiter":
         return {"backgroundColor": "#9c27b0"};
@@ -87,15 +89,18 @@ function NavBar() {
       case "manager":
         return {"backgroundColor": "#ff9800"};
       case undefined:
-        return {"backgroundColor": "#2196f3"};
+        return {"backgroundColor": "#afb42b"};
       default:
         return {"backgroundColor": "#2196f3"};
     }
+  } else {
+    return {"backgroundColor": "#afb42b"};
+  }
   }
 
   return (
     <div style={{ textDecoration: "none" }}>
-      <AppBar position="static">
+      <AppBar position="static" style={handleRole(user ? user.role : undefined)}>
         <Toolbar>
           <Link to="/">
             <IconButton size="large" edge="start" color="inherit">

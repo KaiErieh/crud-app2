@@ -1,7 +1,7 @@
 import { Grid, Paper } from "@mui/material";
 import {NavLink as Link} from "react-router-dom"
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import Tile from "./Tile";
+import Tile, {TileInfo} from "./Tile";
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
@@ -11,7 +11,7 @@ function GuestDashboard() {
         marginTop: "2vh",
         width: "100%",
         height: "auto",
-        backgroundColor: "#2196f3",
+        backgroundColor: "#9e9d24",
         textAlign: "center",
         color: "white",
         opacity: "90%"
@@ -19,6 +19,7 @@ function GuestDashboard() {
       }
 
   return (
+    <div style={{backgroundColor: "#f9fbe7"}}>
     <div><Paper style={paperStyle}>
     <h2>Onboarding</h2>
 </Paper>
@@ -54,6 +55,7 @@ function GuestDashboard() {
     </Link>
   </Grid>
 </Grid></div>
+</div>
   )
 }
 

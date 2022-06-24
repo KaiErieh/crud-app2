@@ -136,6 +136,7 @@ function RegisterForm() {
                   <MenuItem value="recruiter">Recruiter</MenuItem>
                   <MenuItem value="manager">Manager</MenuItem>
                   <MenuItem value="hrbp">HR Business Partner</MenuItem>
+                  <MenuItem value="ops">Operations</MenuItem>
               </Select>
               </FormControl>
             <Button
